@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>yolo_wasm_react</title>
+</head>
+
+<body>
+  <div id="app">
+    <label for="upload-image" tabindex="0">
+      <input id="upload-image" type="file" name="upload-image">
+      Upload image
+    </label>
+    <div id="input-img-wrapper" style="max-width: 800px;">
+      <!-- <img id="image" src="./images/inputs/car2.jpg" alt="" srcset="" style="width: 100%;"> -->
+    </div>
+    <button id="start-btn">START</button>
+    <div>
+      <h1 id="timer"></h1>
+    </div>
+    <div style="max-width: 800px;">
+      <canvas id="outCanvas" style="width: 100%;"></canvas>
+    </div>
+  </div>
+  <script type="module" src="/src/main.ts"></script>
+</body>
+
+</html>
