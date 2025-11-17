@@ -18,7 +18,7 @@ const startBtn = document.getElementById('start-btn') as HTMLButtonElement;
 let selectedMlBackend = '';
 let session: ort.InferenceSession;
 
-mlBackListWrapper.addEventListener('change', async (e) => {
+mlBackListWrapper.addEventListener('change', async (_) => {
   for (const item of mlBackList) {
     if (item.checked) {
       selectedMlBackend = item.id;
