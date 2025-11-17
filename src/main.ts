@@ -11,22 +11,33 @@ import { loadImageFromFile } from "./uploadImage";
 const timerEl = document.getElementById('timer') as HTMLHeadingElement;
 const inputImgWrapper = document.getElementById('input-img-wrapper') as HTMLDivElement;
 const statusEl = document.getElementById('status') as HTMLParagraphElement;
+const mlBackListWrapper = document.getElementById('ml-backend-list') as HTMLUListElement;
+const mlBackList = mlBackListWrapper?.querySelectorAll("INPUT") as NodeListOf<HTMLInputElement>;
+const startBtn = document.getElementById('start-btn') as HTMLButtonElement;
+
+let selectedMlBackend = '';
+let session: ort.InferenceSession;
+
+mlBackListWrapper.addEventListener('change', async (e) => {
+  for (const item of mlBackList) {
+    if (item.checked) {
+      selectedMlBackend = item.id;
+    }
+  }
+  session = await loadModelWithFallback(statusEl, selectedMlBackend);
+  statusEl.innerText += `\nПрогрев модели...`;
+  const warmupImage = new Image();
+  warmupImage.src = './warmup_image3.jpg';
+  await warmupImage.decode();
+  await runInference(warmupImage);
+  statusEl.innerText += `\nМодель прогрета...`;
+});
 
 const inputSize = 640;
 let startTime = new Date();
 
 
-// const inputImage = document.getElementById('image') as HTMLImageElement;
-const startBtn = document.getElementById('start-btn') as HTMLButtonElement;
-const session = await loadModelWithFallback(statusEl);
 
-statusEl.innerText += `\nПрогрев модели...`;
-const warmupImage = new Image();
-warmupImage.src = './warmup_image3.jpg';
-await warmupImage.decode();
-// const img = warmupImage;
-await runInference(warmupImage);
-statusEl.innerText += `\nМодель прогрета...`;
 
 await loadImageFromFile();
 

@@ -1,7 +1,7 @@
 import * as ort from "onnxruntime-web";
 ort.env.wasm.wasmPaths = "./";
-export async function loadModelWithFallback(statusEl: HTMLParagraphElement) {
-    const providers = ['webgl', 'webgpu', 'wasm'];
+export async function loadModelWithFallback(statusEl: HTMLParagraphElement, backend: string) {
+    const providers = [backend];
     const modelUrl = './models/best_nms.onnx';
     const response = await fetch(modelUrl);
     if (!response.ok) {

@@ -10,14 +10,18 @@
 
 <body>
   <div id="app">
-    <ul>
+    <ul id="ml-backend-list">
       <li>
-        <label for=""></label>
-        <input type="radio" name="" id="">
+        <label for="webgl">WEBGL</label>
+        <input type="radio" name="ml-backend" id="webgl">
       </li>
       <li>
-        <label for=""></label>
-        <input type="radio" name="" id="">
+        <label for="webgpu">WEBGPU</label>
+        <input type="radio" name="ml-backend" id="webgpu">
+      </li>
+      <li>
+        <label for="wasm">WASM</label>
+        <input type="radio" name="ml-backend" id="wasm">
       </li>
     </ul>
     <p id="status">...</p>
