@@ -6,16 +6,30 @@ import './style.css'
 import * as ort from "onnxruntime-web";
 import { loadModelWithFallback } from "./loadModel";
 import { loadImageFromFile } from "./uploadImage";
-
+// import { warmupModel } from "./warmupModel";
 
 const timerEl = document.getElementById('timer') as HTMLHeadingElement;
 const inputImgWrapper = document.getElementById('input-img-wrapper') as HTMLDivElement;
+const statusEl = document.getElementById('status') as HTMLParagraphElement;
+
 const inputSize = 640;
 let startTime = new Date();
 
+
 // const inputImage = document.getElementById('image') as HTMLImageElement;
 const startBtn = document.getElementById('start-btn') as HTMLButtonElement;
+const session = await loadModelWithFallback(statusEl);
+
+statusEl.innerText += `\nПрогрев модели...`;
+const warmupImage = new Image();
+warmupImage.src = './warmup_image3.jpg';
+await warmupImage.decode();
+// const img = warmupImage;
+await runInference(warmupImage);
+statusEl.innerText += `\nМодель прогрета...`;
+
 await loadImageFromFile();
+
 startBtn.onclick = async () => {
   const img = inputImgWrapper.getElementsByTagName('img')[0] as HTMLImageElement;
   startTime = new Date();
@@ -30,9 +44,8 @@ async function runInference(img: HTMLImageElement) {
   // === Константы модели ===
   // const modelPath = './models/best_nms.onnx';
 
-  ort.env.wasm.wasmPaths = "/";
+  // ort.env.wasm.wasmPaths = "/";
   // === Сессия ONNX ===
-  const session = await loadModelWithFallback();
 
   const canvas = document.getElementById('outCanvas') as HTMLCanvasElement;
   const ctx = canvas.getContext('2d') as CanvasRenderingContext2D;
@@ -58,6 +71,8 @@ async function runInference(img: HTMLImageElement) {
   ctx.drawImage(img, 0, 0, img.width, img.height);
 
   const inputTensor = await preprocess(img);
+  console.log(inputTensor);
+
   const output = await session.run({ images: inputTensor });
 
   const output0 = output[session.outputNames[0]].data as Float32Array; // [1,300,38]

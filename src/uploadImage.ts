@@ -26,6 +26,7 @@ export function loadImageFromFile(): Promise<HTMLImageElement> {
                 }
 
                 // очищаем контейнер и вставляем изображение
+                img.style.maxWidth = "100%";
                 inputImgWrapper.innerHTML = "";
                 inputImgWrapper.appendChild(img);
 
