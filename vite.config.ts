@@ -3,6 +3,7 @@ import { viteStaticCopy } from 'vite-plugin-static-copy';
 
 
 export default defineConfig({
+    base: './',
     server: {
         headers: {
             // Это важно!

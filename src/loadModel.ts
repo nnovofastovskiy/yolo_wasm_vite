@@ -1,8 +1,8 @@
 import * as ort from "onnxruntime-web";
-ort.env.wasm.wasmPaths = "/";
+ort.env.wasm.wasmPaths = "./";
 export async function loadModelWithFallback(statusEl: HTMLParagraphElement) {
     const providers = ['webgl', 'webgpu', 'wasm'];
-    const modelUrl = '/models/best_nms.onnx';
+    const modelUrl = './models/best_nms.onnx';
     const response = await fetch(modelUrl);
     if (!response.ok) {
         throw new Error(`Не удалось загрузить модель по адресу ${modelUrl}: ${response.statusText}`);
